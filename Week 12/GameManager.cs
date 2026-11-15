@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject enemyOnePrefab;
-    public GameObject coinPrefab;
     public GameObject cloudPrefab;
 
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI scoreText;
 
     public float horizontalScreenSize;
     public float verticalScreenSize;
@@ -25,10 +25,10 @@ public class GameManager : MonoBehaviour
         horizontalScreenSize = 10f;
         verticalScreenSize = 6.5f;
         score = 0;
+        
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         CreateSky();
         InvokeRepeating("CreateEnemy", 1, 3);
-        InvokeRepeating("CreateCoin", 1, 3);
     }
 
     // Update is called once per frame
@@ -41,10 +41,7 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(180, 0, 0));
     }
-    void CreateCoin()
-    {
-        Instantiate(coinPrefab, new Vector3(Random.Range(-horizontalScreenSize +3, horizontalScreenSize -3), Random.Range(-verticalScreenSize +5, verticalScreenSize), 0), Quaternion.identity);
-    }
+
     void CreateSky()
     {
         for (int i = 0; i < 30; i++)
@@ -56,7 +53,7 @@ public class GameManager : MonoBehaviour
     public void AddScore(int earnedScore)
     {
         score = score + earnedScore;
-        Debug.Log("Score:" + score);
+        scoreText.text = "Score: " + score;
     }
 
     public void ChangeLivesText (int currentLives)
