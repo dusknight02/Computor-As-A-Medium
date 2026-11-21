@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    private float verticalTopScreenLimit = 0;
+    private float verticalBottomScreenLimit = -3.5f;
+
     public GameObject bulletPrefab;
     public GameObject explosionPrefab;
     public GameObject thrusterPrefab;
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if (invincible)
-        { 
+        {
             return;
         }
         lives--;
@@ -121,7 +124,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-        void Shooting()
+    void Shooting()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -157,10 +160,14 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x * -1, transform.position.y, 0);
         }
 
-        if (transform.position.y <= -verticalScreenSize || transform.position.y > verticalScreenSize)
+        if (transform.position.y >= verticalTopScreenLimit)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y * -1, 0);
+            transform.position = new Vector3(transform.position.x, 0, 0);
         }
+        if (transform.position.y <= verticalBottomScreenLimit)
 
+        {
+            transform.position = new Vector3(transform.position.x, -3.5f, 0);
+        }
     }
 }

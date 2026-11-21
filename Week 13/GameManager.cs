@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject restartText;
     public GameObject powerupPrefab;
     public GameObject audioPlayer;
+    public GameObject coinPrefab;
 
     public AudioClip powerupSound;
     public AudioClip powerdownSound;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     public float horizontalScreenSize;
     public float verticalScreenSize;
+    
 
     public int score;
     public int cloudMove;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         CreateSky();
         InvokeRepeating("CreateEnemy", 1, 3);
+        InvokeRepeating("CreateCoin", 1, 3);
         StartCoroutine(SpawnPowerup());
         powerupText.text = "No powerups yet!";
     }
@@ -60,6 +63,10 @@ public class GameManager : MonoBehaviour
     void CreateEnemy()
     {
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-horizontalScreenSize, horizontalScreenSize) * 0.9f, verticalScreenSize, 0), Quaternion.Euler(180, 0, 0));
+    }
+    void CreateCoin()
+    {
+        Instantiate(coinPrefab, new Vector3(Random.Range(-horizontalScreenSize + 3, horizontalScreenSize - 3), Random.Range(-verticalScreenSize + 5, verticalScreenSize), 0), Quaternion.identity);
     }
 
     void CreatePowerup()
